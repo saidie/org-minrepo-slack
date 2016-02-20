@@ -29,12 +29,12 @@
 (defvar oms/text-function
   (lambda () (format "Started `%s`" org-clock-heading)))
 
-(defvar oms/task-check-function
+(defvar oms/task-select-function
   (lambda ()
     (let ((tags (nth 5 (org-heading-components))))
       (and tags (string-match ":@OFFICE:" tags)))))
 
-(defvar oms/notification-buffer "3 min")
+(defvar oms/notification-delay "3 min")
 
 (defun oms/send-to-slack (url text &optional options)
   (let ((payload (json-encode (plist-put (or options '()) :text text))))
@@ -51,9 +51,9 @@
 (defun oms/register-notification ()
   (let ((current-task org-clock-current-task))
     (when (and (stringp oms/slack-webhook-url)
-               (funcall oms/task-check-function))
+               (funcall oms/task-select-function))
       (message "will notify to Slack")
-      (run-at-time oms/notification-buffer nil
+      (run-at-time oms/notification-delay nil
                    'oms/send-notification current-task))))
 
 (provide 'org-minrepo-slack)
