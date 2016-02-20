@@ -56,4 +56,6 @@
       (run-at-time oms/notification-buffer nil
                    'oms/send-notification current-task))))
 
+(provide 'org-minrepo-slack)
+
 ;;; org-minrepo-slack.el ends here
