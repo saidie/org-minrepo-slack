@@ -32,7 +32,7 @@
 (defvar oms/task-check-function
   (lambda ()
     (let ((tags (nth 5 (org-heading-components))))
-      (string-match ":@OFFICE:" tags))))
+      (and tags (string-match ":@OFFICE:" tags)))))
 
 (defvar oms/notification-buffer "3 min")
 
